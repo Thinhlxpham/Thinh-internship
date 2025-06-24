@@ -9,8 +9,8 @@ export default function PopularCollections() {
           <h2 className="popular-collections__title">Popular Collections</h2>
           <div className="popular-collections__body">
             {new Array(6).fill(0).map((_, index) => (
-              <div className="collection-column">
-                <Link to="/collection" key={index} className="collection">
+              <div key={index} className="collection-column">
+                <Link to="/collection" className="collection">
                   <img
                     src="https://i.seadn.io/gcs/files/a5414557ae405cb6233b4e2e4fa1d9e6.jpg?auto=format&dpr=1&w=1920"
                     alt=""
