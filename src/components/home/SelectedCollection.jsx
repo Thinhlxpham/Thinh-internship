@@ -1,17 +1,12 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import VerifiedIcon from "../../assets/verified.png";
 
 import { Link } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 import Skeleton from "../ui/Skeleton";
-import Aos from "aos";
 
 export default function SelectedCollection() {
   const { selected, loading } = useContext(AppContext);
-
-  useEffect(() => {
-    Aos.refresh();
-  }, [selected]);
 
   return loading !== true ? (
     <header>

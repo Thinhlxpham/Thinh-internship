@@ -13,8 +13,9 @@ import { AppContext } from "./context/AppContext";
 import Aos from "aos";
 
 function App() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState();
   const [selected, setSelected] = useState([]);
+  const [trending, setTrending] = useState([]);
   async function fetchAPISelected() {
     try {
       const { data } = await axios.get(
@@ -26,43 +27,25 @@ function App() {
       console.error(error);
     }
   }
+  async function fetchAPITrending() {
+    const { data } = await axios.get(
+      "https://remote-internship-api-production.up.railway.app/trendingNFTs"
+    );
+    let trendingData = data.data;
+    setTrending(trendingData);
+
+    setLoading(false);
+  }
 
   useEffect(() => {
+    setLoading(true);
+    window.scrollTo(0, 0);
     fetchAPISelected();
+    fetchAPITrending();
   }, []);
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      Aos.init({
-        disable: false,
-        startEvent: "DOMContentLoaded",
-        initClassName: "aos-init",
-        animatedClassName: "aos-animate",
-        useClassNames: false,
-        disableMutationObserver: false,
-        debounceDelay: 50,
-        throttleDelay: 99,
-        offset: 50,
-        delay: 0,
-        duration: 600,
-        easing: "ease",
-        once: true,
-        mirror: false,
-        anchorPlacement: "top-bottom",
-      });
-      Aos.refreshHard();
-    }, 100);
-
-    return () => clearTimeout(timeout);
-  }, []);
-
-  useEffect(() => {
-    if (!loading) {
-      Aos.refresh();
-    }
-  }, [loading]);
   return (
-    <AppContext.Provider value={{ loading, selected }}>
+    <AppContext.Provider value={{ loading, selected, trending }}>
       <Router>
         <Nav />
         <Routes>
