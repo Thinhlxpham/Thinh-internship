@@ -23,7 +23,7 @@ export default function NewCollections() {
                 spaceBetween={10}
                 slidesPerView={5}
                 navigation
-                pagination={{ clickable: false }}
+                pagination={{ clickable: true }}
                 loop={true}
                 autoplay={{
                   delay: 2500,
