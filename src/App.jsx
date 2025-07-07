@@ -10,13 +10,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 import { AppContext } from "./context/AppContext";
-import Aos from "aos";
 
 function App() {
   const [loading, setLoading] = useState();
   const [selected, setSelected] = useState([]);
   const [trending, setTrending] = useState([]);
   const [newCollection, setNewCollection] = useState([]);
+  const [popularCollection, setPopularCollection] = useState([]);
   async function fetchAPISelected() {
     try {
       const { data } = await axios.get(
@@ -45,6 +45,14 @@ function App() {
     setNewCollection(newCollectionData);
     setLoading(false);
   }
+  async function fetchAPIPopularCollection() {
+    const { data } = await axios.get(
+      "https://remote-internship-api-production.up.railway.app/popularCollections"
+    );
+    let popularCollectionData = data.data;
+    setPopularCollection(popularCollectionData);
+    setLoading(false);
+  }
 
   useEffect(() => {
     setLoading(true);
@@ -52,10 +60,13 @@ function App() {
     fetchAPISelected();
     fetchAPITrending();
     fetchAPINewCollection();
+    fetchAPIPopularCollection();
   }, []);
 
   return (
-    <AppContext.Provider value={{ loading, selected, trending, newCollection }}>
+    <AppContext.Provider
+      value={{ loading, selected, trending, newCollection, popularCollection }}
+    >
       <Router>
         <Nav />
         <Routes>
