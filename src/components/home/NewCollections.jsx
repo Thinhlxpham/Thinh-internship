@@ -7,7 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { Navigation, Pagination } from "swiper/modules";
+import { Navigation } from "swiper/modules";
 
 export default function NewCollections() {
   const { newCollection, loading } = useContext(AppContext);
@@ -19,37 +19,46 @@ export default function NewCollections() {
             <h2 className="new-collections__title">New Collections</h2>
             <div className="new-collections__body">
               <Swiper
-                module={[Navigation, Pagination]}
-                spaceBetween={10}
-                slidesPerView={5}
-                navigation
-                pagination={{ clickable: true }}
+                navigation={true}
+                modules={[Navigation]}
                 loop={true}
                 autoplay={{
                   delay: 2500,
                   disableOnInteraction: false,
                 }}
-                grabCursor={true}
                 breakpoints={{
-                  320: { slidesPerView: 1 },
-                  768: { slidesPerView: 2 },
-                  1024: { slidesPerView: 3 },
+                  500: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                  },
+                  640: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                  },
+                  768: {
+                    slidesPerView: 3,
+                    spaceBetween: 20,
+                  },
+                  1024: {
+                    slidesPerView: 5,
+                    spaceBetween: 20,
+                  },
                 }}
                 className="new-collections__swiper"
-              />
-
-              {newCollection.slice(0, 9).map((collection, index) => (
-                <SwiperSlide key={index}>
-                  <div className="collection-column">
+              >
+                {newCollection.slice(0, 9).map((collection, index) => (
+                  <SwiperSlide key={index}>
                     <Link
                       to={`/collection/${collection.collectionId}`}
                       className="collection"
                     >
-                      <img
-                        src={collection.imageLink}
-                        alt=""
-                        className="collection__img"
-                      />
+                      <div className="collection__img-wrapper">
+                        <img
+                          src={collection.imageLink}
+                          alt=""
+                          className="collection__img"
+                        />
+                      </div>
                       <div className="collection__info">
                         <h3 className="collection__name">{collection.title}</h3>
                         <div className="collection__stats">
@@ -78,9 +87,9 @@ export default function NewCollections() {
                         </div>
                       </div>
                     </Link>
-                  </div>
-                </SwiperSlide>
-              ))}
+                  </SwiperSlide>
+                ))}
+              </Swiper>
             </div>
           </div>
         </div>

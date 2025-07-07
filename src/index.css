@@ -1520,6 +1520,44 @@ USER PAGE
   position: relative;
   z-index: 99;
 }
+.swiper-button-next {
+  z-index: 200;
+}
+.swiper-button-prev,
+.swiper-button-next {
+  position: absolute;
+  top: var(--swiper-navigation-top-offset, 50%);
+  width: calc(var(--swiper-navigation-size) / 44 * 27);
+  height: var(--swiper-navigation-size);
+  margin-top: calc(0px - (var(--swiper-navigation-size) / 2));
+  z-index: 10;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--swiper-navigation-color, var(--swiper-theme-color));
+}
+.swiper-button-next,
+.swiper-rtl .swiper-button-prev {
+  right: var(--swiper-navigation-sides-offset, 10px);
+  left: auto;
+}
+.swiper-button-prev,
+.swiper-button-next {
+  background-color: #fff;
+  width: 44px;
+  height: 44px;
+  border-radius: 9999px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px #cccccc solid;
+}
+.swiper-button-prev:after,
+.swiper-button-next:after {
+  font-size: 20px;
+  color: #000;
+}
 
 .user-info__img {
   width: 100%;
@@ -1795,6 +1833,11 @@ USER PAGE
   .collections-page__title {
     font-size: 32px;
     line-height: 36px;
+  }
+  .collection__img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
   }
 
   /* 

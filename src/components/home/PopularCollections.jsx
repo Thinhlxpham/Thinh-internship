@@ -1,42 +1,96 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AppContext } from "../../context/AppContext";
+
+// Carousel Swiper Import
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { Navigation } from "swiper/modules";
 
 export default function PopularCollections() {
+  const { popularCollection, loading } = useContext(AppContext);
   return (
-    <section id="popular-collections">
-      <div className="container">
-        <div className="row">
-          <h2 className="popular-collections__title">Popular Collections</h2>
-          <div className="popular-collections__body">
-            {new Array(6).fill(0).map((_, index) => (
-              <div key={index} className="collection-column">
-                <Link to="/collection" className="collection">
-                  <img
-                    src="https://i.seadn.io/gcs/files/a5414557ae405cb6233b4e2e4fa1d9e6.jpg?auto=format&dpr=1&w=1920"
-                    alt=""
-                    className="collection__img"
-                  />
-                  <div className="collection__info">
-                    <h3 className="collection__name">Bored Ape Kennel Club</h3>
-                    <div className="collection__stats">
-                      <div className="collection__stat">
-                        <span className="collection__stat__label">Floor</span>
-                        <span className="collection__stat__data">0.46 ETH</span>
+    loading !== true && (
+      <section id="popular-collections">
+        <div className="container">
+          <div className="row">
+            <h2 className="popular-collections__title">Popular Collections</h2>
+            <div className="popular-collections__body">
+              <Swiper
+                navigation={true}
+                modules={[Navigation]}
+                loop={true}
+                autoplay={{
+                  delay: 2500,
+                  disableOnInteraction: false,
+                }}
+                breakpoints={{
+                  500: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                  },
+                  640: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                  },
+                  768: {
+                    slidesPerView: 3,
+                    spaceBetween: 20,
+                  },
+                  1024: {
+                    slidesPerView: 5,
+                    spaceBetween: 20,
+                  },
+                }}
+              >
+                {popularCollection.slice(0, 9).map((collection, index) => (
+                  <SwiperSlide hey={index}>
+                    <Link
+                      to={`/collection/${collection.collectionId}`}
+                      className="collection"
+                    >
+                      <img
+                        src={collection.imageLink}
+                        alt=""
+                        className="collection__img"
+                      />
+                      <div className="collection__info">
+                        <h3 className="collection__name">{collection.title}</h3>
+                        <div className="collection__stats">
+                          <div className="collection__stat">
+                            <span className="collection__stat__label">
+                              Floor
+                            </span>
+                            <span className="collection__stat__data">
+                              {(
+                                Math.round(collection.floor * 100) / 100
+                              ).toString().length >= 4
+                                ? Math.round(collection.floor * 100) / 100
+                                : Math.round(collection.floor * 100) / 100 +
+                                  "0"}{" "}
+                              ETH
+                            </span>
+                          </div>
+                          <div className="collection__stat">
+                            <span className="collection__stat__label">
+                              Total Volume
+                            </span>
+                            <span className="collection__stat__data">
+                              {collection.totalVolume}k ETH
+                            </span>
+                          </div>
+                        </div>
                       </div>
-                      <div className="collection__stat">
-                        <span className="collection__stat__label">
-                          Total Volume
-                        </span>
-                        <span className="collection__stat__data">281K ETH</span>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              </div>
-            ))}
+                    </Link>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    )
   );
 }
