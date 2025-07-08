@@ -17,6 +17,7 @@ function App() {
   const [trending, setTrending] = useState([]);
   const [newCollection, setNewCollection] = useState([]);
   const [popularCollection, setPopularCollection] = useState([]);
+  const [collections, setCollections] = useState([]);
   async function fetchAPISelected() {
     try {
       const { data } = await axios.get(
@@ -53,6 +54,13 @@ function App() {
     setPopularCollection(popularCollectionData);
     setLoading(false);
   }
+  async function fetchAPICollectionPage() {
+    const { data } = await axios.get(
+      "https://remote-internship-api-production.up.railway.app/collections"
+    );
+    setCollections(data.data);
+    setLoading(false);
+  }
 
   useEffect(() => {
     setLoading(true);
@@ -61,11 +69,19 @@ function App() {
     fetchAPITrending();
     fetchAPINewCollection();
     fetchAPIPopularCollection();
+    fetchAPICollectionPage();
   }, []);
 
   return (
     <AppContext.Provider
-      value={{ loading, selected, trending, newCollection, popularCollection }}
+      value={{
+        loading,
+        selected,
+        trending,
+        newCollection,
+        popularCollection,
+        collections,
+      }}
     >
       <Router>
         <Nav />
