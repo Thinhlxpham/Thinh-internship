@@ -46,7 +46,7 @@ export default function PopularCollections() {
                 }}
               >
                 {popularCollection.slice(0, 9).map((collection, index) => (
-                  <SwiperSlide hey={index}>
+                  <SwiperSlide key={index}>
                     <Link
                       to={`/collection/${collection.collectionId}`}
                       className="collection"
