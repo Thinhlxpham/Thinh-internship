@@ -4,9 +4,7 @@ import { AppContext } from "../../context/AppContext";
 
 // Carousel Swiper Import
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+
 import { Navigation } from "swiper/modules";
 
 export default function PopularCollections() {
