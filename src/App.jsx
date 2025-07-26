@@ -8,6 +8,8 @@ import ItemPage from "./pages/ItemPage";
 import UserPage from "./pages/UserPage";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 import { AppContext } from "./context/AppContext";
 
@@ -71,6 +73,37 @@ function App() {
     fetchAPIPopularCollection();
     fetchAPICollectionPage();
   }, []);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      AOS.init({
+        disable: false,
+        startEvent: "DOMContentLoaded",
+        initClassName: "aos-init",
+        animatedClassName: "aos-animate",
+        useClassNames: false,
+        disableMutationObserver: false,
+        debounceDelay: 50,
+        throttleDelay: 99,
+        offset: 50,
+        delay: 0,
+        duration: 600,
+        easing: "ease",
+        once: true,
+        mirror: false,
+        anchorPlacement: "top-bottom",
+      });
+      AOS.refreshHard();
+    }, 100);
+
+    return () => clearTimeout(timeout);
+  }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      AOS.refresh();
+    }
+  }, [loading]);
 
   return (
     <AppContext.Provider

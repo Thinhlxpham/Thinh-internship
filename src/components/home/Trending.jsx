@@ -1,25 +1,49 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import VerifiedIcon from "../../assets/verified.png";
-import TrendingCollection from "../../assets/trending-collection.avif";
 import { Link } from "react-router-dom";
 import Skeleton from "../ui/Skeleton";
 import { AppContext } from "../../context/AppContext";
+import Aos from "aos";
 
 export default function Trending() {
   const { trending, loading } = useContext(AppContext);
+
+  useEffect(() => {
+    if (!loading) {
+      const timeout = setTimeout(() => {
+        Aos.refreshHard();
+      }, 100);
+      return () => clearTimeout(timeout);
+    }
+  }, [loading, trending]);
   return loading !== true ? (
     <section id="trending">
       <div className="container">
         <div className="row trending__row">
           <div className="trending__header">
-            <h2 className="trending__header__title">Trending NFTs</h2>
-            <Link className="trending__header__button" to={`/collections`}>
+            <h2
+              className="trending__header__title"
+              data-aos="fade-up"
+              data-aos-delay="100"
+            >
+              Trending NFTs
+            </h2>
+            <Link
+              className="trending__header__button"
+              to={`/collections`}
+              data-aos="fade-up"
+              data-aos-delay="100"
+            >
               View All
             </Link>
           </div>
           <div className="trending__body">
             <div className="trending-column">
-              <div className="trending-column__header">
+              <div
+                className="trending-column__header"
+                data-aos="fade-up"
+                data-aos-delay="150"
+              >
                 <div className="trending-column__header__rank">#</div>
                 <div className="trending-column__header__collection">
                   Collection
@@ -35,6 +59,9 @@ export default function Trending() {
                     to={`/collection/${collection.collectionId}`}
                     key={index}
                     className="trending-collection"
+                    data-aos="fade-up"
+                    data-aos-delay={200 + index * 50}
+                    data-aos-duration="600"
                   >
                     <div className="trending-collection__rank">
                       {collection?.rank}
@@ -74,7 +101,11 @@ export default function Trending() {
               </div>
             </div>
             <div className="trending-column">
-              <div className="trending-column__header trending-column__header2">
+              <div
+                className="trending-column__header trending-column__header2"
+                data-aos="fade-up"
+                data-aos-delay="150"
+              >
                 <div className="trending-column__header__rank">#</div>
                 <div className="trending-column__header__collection">
                   Collection
@@ -90,6 +121,9 @@ export default function Trending() {
                     to={`/collection/${product.collectionId}`}
                     key={index}
                     className="trending-collection"
+                    data-aos="fade-up"
+                    data-aos-delay={200 + index * 50}
+                    data-aos-duration="600"
                   >
                     <div className="trending-collection__rank">
                       {product?.rank}

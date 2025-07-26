@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 
@@ -8,16 +8,39 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation } from "swiper/modules";
+import Aos from "aos";
 
 export default function NewCollections() {
   const { newCollection, loading } = useContext(AppContext);
+
+  useEffect(() => {
+    if (!loading) {
+      const timeout = setTimeout(() => {
+        Aos.refreshHard();
+      }, 100);
+      return () => clearTimeout(timeout);
+    }
+  }, [loading, newCollection]);
+
   return (
     loading !== true && (
       <section id="new-collections">
         <div className="container">
           <div className="row">
-            <h2 className="new-collections__title">New Collections</h2>
-            <div className="new-collections__body">
+            <h2
+              className="new-collections__title"
+              data-aos="fade-up"
+              data-aos-delay="200"
+              data-aos-once="false"
+            >
+              New Collections
+            </h2>
+            <div
+              className="new-collections__body"
+              data-aos="fade-up"
+              data-aos-delay="400"
+              data-aos-once="false"
+            >
               <Swiper
                 navigation={true}
                 modules={[Navigation]}
