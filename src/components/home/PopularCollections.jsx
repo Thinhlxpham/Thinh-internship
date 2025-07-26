@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
-
+import Aos from "aos";
 // Carousel Swiper Import
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -9,13 +9,34 @@ import { Navigation } from "swiper/modules";
 
 export default function PopularCollections() {
   const { popularCollection, loading } = useContext(AppContext);
+
+  useEffect(() => {
+    if (!loading) {
+      const timeout = setTimeout(() => {
+        Aos.refreshHard();
+      }, 100);
+      return () => clearTimeout(timeout);
+    }
+  }, [loading, popularCollection]);
   return (
     loading !== true && (
       <section id="popular-collections">
         <div className="container">
           <div className="row">
-            <h2 className="popular-collections__title">Popular Collections</h2>
-            <div className="popular-collections__body">
+            <h2
+              className="popular-collections__title"
+              data-aos="fade-up"
+              data-aos-delay="200"
+              data-aos-once="false"
+            >
+              Popular Collections
+            </h2>
+            <div
+              className="popular-collections__body"
+              data-aos="fade-up"
+              data-aos-delay="400"
+              data-aos-once="false"
+            >
               <Swiper
                 navigation={true}
                 modules={[Navigation]}

@@ -1592,7 +1592,6 @@ USER PAGE
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
-  border-bottom: 1px solid rgba(18, 18, 18, 0.12);
 }
 
 .user-info__wallet__data {
